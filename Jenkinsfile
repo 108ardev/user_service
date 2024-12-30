@@ -1,15 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Set Permissions') {
-            steps {
-                sh 'chmod +x gradlew'
-            }
-        }
         stage('Checkout') {
             steps {
                 // Клонирование репозитория
                 git branch: 'main', url: 'https://github.com/108ardev/user_service.git'
+            }
+        }
+        stage('Set Permissions') {
+            steps {
+                // Установка прав на выполнение для gradlew
+                sh 'chmod +x gradlew'
             }
         }
         stage('Build') {
