@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('Set Permissions') {
+            steps {
+                sh 'chmod +x gradlew'
+            }
+        }
         stage('Checkout') {
             steps {
                 // Клонирование репозитория
