@@ -1,4 +1,4 @@
-name: Java CI (Gradle)
+name: CI Pipeline
 
 on:
   push:
@@ -23,8 +23,21 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{runner.os}}-gradle
+
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon
+
       - name: Run tests
-        run: ./gradlew test --no-daemon
+        run: ./gradlew test --no-daemon --continue
 
       - name: Publish test results
         if: always()
