@@ -6,7 +6,9 @@ import org.ardev.user_service.model.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+import static org.mapstruct.ReportingPolicy.IGNORE;
+
+@Mapper(componentModel = "spring", unmappedTargetPolicy = IGNORE)
 public interface UserMapper {
 
     User toEntity(UserRequest user);
